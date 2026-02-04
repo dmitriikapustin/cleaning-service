@@ -31,12 +31,12 @@
   --color-background: #ffffff;
   --color-background-alt: #f9fafb;
   
-  /* Text */
+  /* Text — улучшенная контрастность */
   --color-text: #021255;
-  --color-text-secondary: rgba(2, 18, 85, 0.7);
-  --color-text-muted: rgba(2, 18, 85, 0.5);
+  --color-text-secondary: rgba(2, 18, 85, 0.8);
+  --color-text-muted: rgba(2, 18, 85, 0.65);
   --color-text-on-dark: #ffffff;
-  --color-text-on-dark-muted: rgba(255, 255, 255, 0.7);
+  --color-text-on-dark-muted: rgba(255, 255, 255, 0.8);
   
   /* Borders */
   --color-border: #dfdedb;
