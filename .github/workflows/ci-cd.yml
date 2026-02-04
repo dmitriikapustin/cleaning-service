@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository_owner }}/mslclean
+  IMAGE_NAME: ${{ github.repository_owner }}/mslclean.ru
 
 permissions:
   contents: read
