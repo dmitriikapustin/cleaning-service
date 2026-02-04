@@ -15,6 +15,15 @@
   --white: #ffffff;
   --black: #000000;
   
+  /* Aliases for page.module.css */
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-surface: var(--surface);
+  --color-text: var(--text-primary);
+  --color-text-muted: var(--text-secondary);
+  
   /* Border Radius - Samara Mars Style */
   --radius-main: 20px;
   --radius-small: 10px;

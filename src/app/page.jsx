@@ -9,30 +9,132 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import styles from './page.module.css'
 
-const SERVICES = [
+// Контент из ТЗ
+const HERO_FACTS = [
+  { icon: '⚡', text: 'Готовый персонал за 24 часа' },
+  { icon: '🔄', text: 'Замена без остановки объекта' },
+  { icon: '📋', text: 'Юридическое оформление и страховка' },
+]
+
+const PROBLEMS = [
   {
     num: 1,
-    title: 'Подбор персонала',
-    desc: 'Профессиональный подбор клинингового персонала под ваши требования.',
-    image: '/images/cleaning-team.png',
+    title: 'Текучка персонала',
+    items: [
+      'Клинер не пришел на работу',
+      'Потеря репутации, потеря клиентов',
+      'Дорогостоящая непредвиденная замена',
+    ],
   },
   {
     num: 2,
-    title: 'Контроль качества',
-    desc: 'Постоянный мониторинг и контроль работы персонала 24/7.',
-    image: '/images/cleaning-kitchen.png',
+    title: 'Поиск и обучение',
+    items: [
+      'Ищете клинера месяц через знакомых и Авито',
+      'Переплачиваете наличными',
+      'Нет гарантий на качество',
+    ],
   },
   {
     num: 3,
-    title: 'Замена сотрудников',
-    desc: 'Оперативная замена персонала без остановки работы объекта.',
-    image: '/images/cleaning-livingroom.png',
+    title: 'Управление персоналом',
+    items: [
+      'Вы не кадровик, но должны следить за графиком',
+      'Больничные, отпуска, конфликты',
+      'Налоги, ПФР, документы — ваша задача',
+    ],
   },
   {
     num: 4,
-    title: 'Управление процессами',
-    desc: 'Полное управление клининговыми процессами под ключ.',
-    image: '/images/cleaning-office.png',
+    title: 'Стандарты качества',
+    items: [
+      'Ваш клинер — ваша ответственность',
+      'Если что-то сломал или потерял — вам платить',
+      'Нет контроля качества',
+    ],
+  },
+]
+
+const SOLUTIONS = [
+  {
+    num: 1,
+    title: 'Готовый персонал 24/7',
+    desc: 'Мы подбираем персонал по 7 параметрам: опыт, документы, навыки, рекомендации, адаптивность, устойчивость к нагрузкам, ответственность',
+    highlight: 'Готовый сотрудник за 24-48 часов',
+  },
+  {
+    num: 2,
+    title: 'Замена без остановки',
+    desc: 'Заболел — мы пришлем замену той же смены. Контроль 24/7.',
+    highlight: 'Гарантия непрерывности работы',
+  },
+  {
+    num: 3,
+    title: 'Юридическое оформление',
+    desc: 'Договор, безналичная оплата, фиксированная цена. Вы не отвечаете перед законом за клинера — мы отвечаем.',
+    highlight: 'Экономия на ФОТ, налогах, ПФР',
+  },
+  {
+    num: 4,
+    title: 'Контроль качества',
+    desc: 'Каждый объект сопровождает менеджер. Если не нравится — замена в течение дня.',
+    highlight: 'Персональный менеджер объекта',
+  },
+]
+
+const USP = [
+  {
+    icon: '🏋️',
+    title: 'Специалист по фитнес-клубам и ресторанам',
+    desc: 'Мы работаем с вашей индустрией 3+ года, понимаем специфику',
+  },
+  {
+    icon: '✓',
+    title: 'Гарантия качества',
+    desc: 'Если персонал не подходит — замена в течение дня, без доплаты',
+  },
+  {
+    icon: '💰',
+    title: 'Фиксированная цена',
+    desc: 'Никаких скрытых платежей, никаких наличных расчетов',
+  },
+  {
+    icon: '⚡',
+    title: 'Быстрый подбор',
+    desc: 'Готовый персонал за 24-48 часов, замена — за 2 часа',
+  },
+  {
+    icon: '📋',
+    title: 'Полная юридическая поддержка',
+    desc: 'Договор, налоги, ПФР, страховка — все на нас',
+  },
+  {
+    icon: '👁️',
+    title: 'Контроль 24/7',
+    desc: 'Менеджер отвечает за каждый объект, контроль качества в режиме реального времени',
+  },
+]
+
+const STEPS = [
+  {
+    num: 1,
+    title: 'Анализ задачи',
+    desc: 'Изучаем объект, требования и процессы',
+  },
+  {
+    num: 2,
+    title: 'Подбор персонала',
+    desc: 'Формируем команду под конкретные задачи',
+  },
+  {
+    num: 3,
+    title: 'Запуск работы',
+    desc: 'Выводим персонал на объект, контролируем качество',
+  },
+  {
+    num: 4,
+    title: 'Сопровождение',
+    desc: 'Менеджер на связи 24/7, решаем все вопросы',
   },
 ]
 
@@ -44,57 +146,97 @@ const PORTFOLIO = [
   { title: 'Отель Люкс', image: '/images/cleaning-hero.png' },
 ]
 
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 }
+}
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+}
+
 export default function HomePage() {
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.pageBody}>
-        {/* Navbar */}
+        {/* ===================== NAVBAR ===================== */}
         <nav className={styles.navbar}>
           <div className={styles.navbarInner}>
             <Link href="/" className={styles.brand}>
               MSL<span>Clean</span>
             </Link>
             <div className={styles.navMenu}>
+              <Link href="#about" className={styles.navLink}>О компании</Link>
               <Link href="#services" className={styles.navLink}>Услуги</Link>
-              <Link href="#about" className={styles.navLink}>О нас</Link>
-              <Link href="#portfolio" className={styles.navLink}>Портфолио</Link>
+              <Link href="#portfolio" className={styles.navLink}>Клиенты</Link>
+              <Link href="#contact" className={styles.navLink}>Контакты</Link>
             </div>
-            <Link href="#contact" className={styles.navButton}>
-              Связаться
-            </Link>
+            <div className={styles.navRight}>
+              <div className={styles.navPhone}>
+                <a href="tel:+79999999999">+7 (999) 999-99-99</a>
+                <span className={styles.navPhoneHint}>Работаем 24/7</span>
+              </div>
+              <Link href="#contact" className={styles.navButton}>
+                Получить расчёт
+              </Link>
+            </div>
           </div>
         </nav>
 
-        {/* Hero Section - Full screen image like Samara Mars */}
+        {/* ===================== HERO ===================== */}
         <section className={styles.heroSection}>
           <div className={styles.heroPadding}>
             <div className={styles.heroContent}>
-              {/* Hero Title - Top Left */}
+              {/* Title - Top Left */}
               <div className={styles.heroTitleWrapper}>
                 <motion.h1 
                   className={styles.heroTitle}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                  Чистота без<br/>управленческих забот
+                  Чистота.<br/>Без управленческих забот
                 </motion.h1>
               </div>
 
-              {/* Description Box - Bottom Right */}
+              {/* Description - Bottom Right */}
               <motion.div 
                 className={styles.heroDescriptionBox}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
               >
                 <p>
-                  Мы понимаем важность чистоты для вашего бизнеса. Наша команда экспертов 
-                  обеспечит профессиональный клининг и избавит вас от забот по управлению персоналом.
+                  Подбор, замены и контроль процессов под ключ для ресторанов и фитнес-клубов. 
+                  Мы предоставляем сотрудников и полностью берём на себя управление их работой.
                 </p>
+                <span className={styles.heroSubtext}>
+                  Аутстафинг клинингового персонала с гарантией качества, контролем и заменой. 
+                  Фиксированная цена, договор, безналичная оплата.
+                </span>
                 <Link href="#contact" className={styles.button}>
-                  Связаться
+                  Бесплатная консультация
                 </Link>
+              </motion.div>
+
+              {/* Facts - Bottom */}
+              <motion.div 
+                className={styles.heroFacts}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+              >
+                {HERO_FACTS.map((fact, i) => (
+                  <div key={i} className={styles.heroFact}>
+                    <span className={styles.heroFactIcon}>{fact.icon}</span>
+                    <span>{fact.text}</span>
+                  </div>
+                ))}
               </motion.div>
 
               {/* Background Image */}
@@ -112,48 +254,50 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* About Section - Centered text like Samara Mars */}
+        {/* ===================== ABOUT ===================== */}
         <section className={styles.aboutSection} id="about">
           <div className={styles.sectionPadding}>
             <div className={styles.aboutContent}>
               <motion.div 
                 className={styles.tag}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
+                variants={fadeInUp}
               >
                 Добро пожаловать в MSL Clean
               </motion.div>
               <motion.h2 
                 className={styles.aboutTitle}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
+                variants={fadeInUp}
                 transition={{ delay: 0.1 }}
               >
                 Ваш надёжный партнёр в аутстафинге клинингового персонала
               </motion.h2>
               <motion.p 
                 className={styles.aboutText}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
+                variants={fadeInUp}
                 transition={{ delay: 0.2 }}
               >
-                MSL Clean — компания, специализирующаяся на аутстафинге клинингового персонала 
-                для ресторанов и фитнес-клубов. Мы берём на себя подбор, контроль и управление 
-                сотрудниками, обеспечивая стабильную чистоту на вашем объекте.
+                Мы берём на себя подбор, контроль и управление сотрудниками, обеспечивая стабильную чистоту на вашем объекте.
+                Вы работаете, мы отвечаем за чистоту. Никаких звонков клинерам, никаких замен в спешке, никаких судебных проблем.
               </motion.p>
             </div>
           </div>
         </section>
 
-        {/* Banner - Full width image like Samara Mars */}
+        {/* ===================== BANNER ===================== */}
         <section className={styles.bannerSection}>
           <div className={styles.bannerBkg}>
             <Image 
               src="/images/cleaning-kitchen.png"
-              alt="Чистая кухня"
+              alt="Чистая кухня ресторана"
               fill
               className={styles.bannerImage}
             />
@@ -161,82 +305,241 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Services Section - Row-based like Samara Mars */}
-        <section className={styles.servicesSection} id="services">
+        {/* ===================== PROBLEMS ===================== */}
+        <section className={styles.problemsSection} id="problems">
           <div className={styles.sectionPadding}>
-            <div className={styles.servicesTop}>
-              <div className={styles.aboutContent}>
-                <motion.div 
-                  className={styles.tag}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                >
-                  Услуги
-                </motion.div>
-                <motion.h2 
-                  className={styles.aboutTitle}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 }}
-                >
-                  Профессиональные услуги для успешного клининга
-                </motion.h2>
-              </div>
+            <div className={styles.sectionTop}>
+              <motion.div 
+                className={styles.tag}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+              >
+                Знакомо?
+              </motion.div>
+              <motion.h2 
+                className={styles.sectionTitle}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+                transition={{ delay: 0.1 }}
+              >
+                Вам знакомо это?
+              </motion.h2>
+              <motion.p 
+                className={styles.sectionSubtitle}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+                transition={{ delay: 0.2 }}
+              >
+                Это обходится вам дорого
+              </motion.p>
             </div>
 
-            <div className={styles.servicesGrid}>
-              {SERVICES.map((service, index) => (
+            <motion.div 
+              className={styles.problemsGrid}
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {PROBLEMS.map((problem) => (
                 <motion.div 
-                  key={service.num}
-                  className={styles.serviceItem}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
+                  key={problem.num}
+                  className={styles.problemCard}
+                  variants={fadeInUp}
+                >
+                  <div className={styles.problemNum}>{problem.num}</div>
+                  <h3 className={styles.problemTitle}>{problem.title}</h3>
+                  <ul className={styles.problemList}>
+                    {problem.items.map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ===================== SOLUTION ===================== */}
+        <section className={styles.solutionSection} id="services">
+          <div className={styles.sectionPadding}>
+            <div className={styles.sectionTop}>
+              <motion.div 
+                className={styles.tag}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+              >
+                Решение
+              </motion.div>
+              <motion.h2 
+                className={styles.sectionTitle}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+                transition={{ delay: 0.1 }}
+              >
+                Аутстафинг клинингового персонала
+              </motion.h2>
+              <motion.p 
+                className={styles.sectionSubtitle}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+                transition={{ delay: 0.2 }}
+              >
+                Мы берём всю ответственность на себя
+              </motion.p>
+            </div>
+
+            <div className={styles.solutionGrid}>
+              {SOLUTIONS.map((solution, index) => (
+                <motion.div 
+                  key={solution.num}
+                  className={styles.solutionItem}
+                  initial="hidden"
+                  whileInView="visible"
                   viewport={{ once: true }}
+                  variants={fadeInUp}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <div className={styles.serviceContent}>
-                    <div className={styles.serviceNum}>
-                      <span>{service.num}</span>
+                  <div className={styles.solutionContent}>
+                    <div className={styles.solutionNum}>
+                      <span>{solution.num}</span>
                     </div>
-                    <h3 className={styles.serviceTitle}>{service.title}</h3>
-                    <div className={styles.serviceImageWrapper}>
-                      <div className={styles.serviceImageInner}>
-                        <Image 
-                          src={service.image}
-                          alt={service.title}
-                          fill
-                          className={styles.serviceImage}
-                        />
-                      </div>
-                    </div>
-                    <p className={styles.serviceDesc}>{service.desc}</p>
+                    <h3 className={styles.solutionTitle}>{solution.title}</h3>
+                    <p className={styles.solutionDesc}>{solution.desc}</p>
+                    <div className={styles.solutionHighlight}>{solution.highlight}</div>
                   </div>
-                  <div className={styles.serviceLine} />
+                  <div className={styles.solutionLine} />
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Portfolio Slider - Like Samara Mars */}
+        {/* ===================== USP ===================== */}
+        <section className={styles.uspSection}>
+          <div className={styles.sectionPadding}>
+            <div className={styles.sectionTop}>
+              <motion.div 
+                className={styles.tag}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+              >
+                Преимущества
+              </motion.div>
+              <motion.h2 
+                className={styles.sectionTitle}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+                transition={{ delay: 0.1 }}
+              >
+                Почему выбирают нас
+              </motion.h2>
+            </div>
+
+            <motion.div 
+              className={styles.uspGrid}
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {USP.map((item, i) => (
+                <motion.div 
+                  key={i}
+                  className={styles.uspCard}
+                  variants={fadeInUp}
+                >
+                  <div className={styles.uspIcon}>{item.icon}</div>
+                  <h3 className={styles.uspTitle}>{item.title}</h3>
+                  <p className={styles.uspDesc}>{item.desc}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ===================== HOW IT WORKS ===================== */}
+        <section className={styles.stepsSection}>
+          <div className={styles.sectionPadding}>
+            <div className={styles.sectionTop}>
+              <motion.div 
+                className={styles.tag}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+              >
+                Процесс
+              </motion.div>
+              <motion.h2 
+                className={styles.sectionTitle}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+                transition={{ delay: 0.1 }}
+              >
+                Как это работает? Всего 4 шага
+              </motion.h2>
+            </div>
+
+            <motion.div 
+              className={styles.stepsGrid}
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {STEPS.map((step) => (
+                <motion.div 
+                  key={step.num}
+                  className={styles.stepCard}
+                  variants={fadeInUp}
+                >
+                  <div className={styles.stepNum}>{step.num}</div>
+                  <h3 className={styles.stepTitle}>{step.title}</h3>
+                  <p className={styles.stepDesc}>{step.desc}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ===================== PORTFOLIO SLIDER ===================== */}
         <section className={styles.portfolioSection} id="portfolio">
           <div className={styles.sectionPadding}>
             <div className={styles.portfolioTop}>
               <div className={styles.portfolioInfo}>
                 <motion.div 
                   className={styles.tag}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
+                  initial="hidden"
+                  whileInView="visible"
                   viewport={{ once: true }}
+                  variants={fadeInUp}
                 >
-                  Портфолио
+                  Клиенты
                 </motion.div>
                 <motion.h2 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial="hidden"
+                  whileInView="visible"
                   viewport={{ once: true }}
+                  variants={fadeInUp}
                   transition={{ delay: 0.1 }}
                 >
                   Наши объекты и проекты
@@ -280,7 +583,6 @@ export default function HomePage() {
                     </div>
                     <div className={styles.portfolioCardInfo}>
                       <h4>{item.title}</h4>
-                      <button className={styles.button}>Подробнее</button>
                     </div>
                   </div>
                 </SwiperSlide>
@@ -289,7 +591,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Contact Section - Gradient background like Samara Mars */}
+        {/* ===================== CONTACT ===================== */}
         <section className={styles.contactSection} id="contact">
           <div className={styles.contactBkg}>
             <div className={styles.contactGradient} />
@@ -300,7 +602,14 @@ export default function HomePage() {
                 <div className={styles.contactLeft}>
                   <div className={styles.tagWhite}>Связаться с нами</div>
                   <h2>Давайте обсудим<br/>ваш проект</h2>
-                  <p>Не любите формы? Напишите на email</p>
+                  <p>Ответим в течение 10 минут</p>
+                  <div className={styles.contactInfo}>
+                    <a href="tel:+79999999999" className={styles.contactPhone}>
+                      +7 (999) 999-99-99
+                    </a>
+                    <span className={styles.contactHint}>Работаем 24/7</span>
+                  </div>
+                  <p className={styles.contactAlt}>Не любите звонить? Напишите на email</p>
                   <a href="mailto:info@mslclean.ru" className={styles.emailLink}>
                     info@mslclean.ru
                   </a>
@@ -313,12 +622,13 @@ export default function HomePage() {
                         <input type="text" placeholder="Имя" required />
                       </div>
                       <div className={styles.formGroup}>
-                        <input type="text" placeholder="Фамилия" />
+                        <label>Компания</label>
+                        <input type="text" placeholder="Название компании" />
                       </div>
                     </div>
                     <div className={styles.formRow}>
                       <div className={styles.formGroup}>
-                        <label>Телефон</label>
+                        <label>Телефон *</label>
                         <input type="tel" placeholder="+7 (999) 999-99-99" required />
                       </div>
                       <div className={styles.formGroup}>
@@ -327,12 +637,15 @@ export default function HomePage() {
                       </div>
                     </div>
                     <div className={styles.formGroup}>
-                      <label>Сообщение</label>
-                      <textarea placeholder="Расскажите о вашем проекте..." rows={4} />
+                      <label>Расскажите о вашем объекте</label>
+                      <textarea placeholder="Тип объекта, площадь, количество персонала..." rows={4} />
                     </div>
                     <button type="submit" className={styles.button}>
-                      Отправить
+                      Получить расчёт
                     </button>
+                    <p className={styles.formHint}>
+                      Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+                    </p>
                   </form>
                 </div>
               </div>
@@ -349,15 +662,19 @@ export default function HomePage() {
                       MSL<span>Clean</span>
                     </Link>
                     <p>Аутстафинг клинингового персонала для ресторанов и фитнес-клубов</p>
+                    <div className={styles.footerPromo}>
+                      <span className={styles.promoTag}>🎁 Скидка 10%</span>
+                      <span>для сетевых бизнесов и крупных объектов</span>
+                    </div>
                   </div>
                   <div className={styles.footerNav}>
                     <div className={styles.footerColumn}>
                       <h5>Навигация</h5>
                       <div className={styles.footerDivider} />
                       <Link href="/">Главная</Link>
+                      <Link href="#about">О компании</Link>
                       <Link href="#services">Услуги</Link>
-                      <Link href="#about">О нас</Link>
-                      <Link href="#portfolio">Портфолио</Link>
+                      <Link href="#portfolio">Клиенты</Link>
                     </div>
                     <div className={styles.footerColumn}>
                       <h5>Контакты</h5>
@@ -365,6 +682,7 @@ export default function HomePage() {
                       <a href="tel:+79999999999">+7 (999) 999-99-99</a>
                       <a href="mailto:info@mslclean.ru">info@mslclean.ru</a>
                       <span>Москва, Россия</span>
+                      <span className={styles.footerHint}>Работаем 24/7</span>
                     </div>
                   </div>
                 </div>
