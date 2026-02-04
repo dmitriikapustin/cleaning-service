@@ -107,6 +107,9 @@
   display: flex;
   align-items: flex-end;
   padding-top: 80px;
+  isolation: isolate; /* Создаёт stacking context — фото не вылезет */
+  overflow: hidden;
+  border-radius: 0 0 32px 32px; /* Скругление снизу */
 }
 
 .heroPadding {
@@ -185,6 +188,8 @@
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
+  border-radius: inherit; /* Наследует скругление от родителя */
 }
 
 .heroImage {
