@@ -199,12 +199,7 @@
 .heroOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0.3) 0%,
-    rgba(255, 255, 255, 0.1) 40%,
-    transparent 70%
-  );
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* ===================== BUTTON ===================== */
@@ -319,11 +314,7 @@
 .bannerOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.1) 0%,
-    rgba(0, 0, 0, 0.2) 100%
-  );
+  background: rgba(0, 0, 0, 0.15);
 }
 
 /* ===================== PROBLEMS ===================== */
@@ -615,11 +606,7 @@
 .portfolioImageOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    transparent 50%,
-    rgba(0, 0, 0, 0.6) 100%
-  );
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .portfolioCardInfo {
@@ -651,11 +638,7 @@
 .contactGradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    var(--color-primary) 0%,
-    var(--color-primary-dark) 100%
-  );
+  background: var(--color-primary);
 }
 
 .contactContent {
