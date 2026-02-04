@@ -1,6 +1,7 @@
 'use client'
 
-import { Container, Tag } from '../atoms'
+import { motion } from 'framer-motion'
+import { Container, Tag, AnimatedSection } from '../atoms'
 import { StepCard } from '../molecules'
 import styles from './HowItWorksSection.module.css'
 
@@ -27,33 +28,68 @@ const STEPS = [
   },
 ]
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+}
+
+const stepVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+}
+
 /**
  * Template: HowItWorksSection
- * Секция "Как это работает"
+ * Секция "Как это работает" с анимациями
  */
 export default function HowItWorksSection() {
   return (
     <section className={styles.section} id="how-it-works">
       <Container>
-        <div className={styles.header}>
+        <AnimatedSection className={styles.header}>
           <Tag>Процесс</Tag>
           <h2>Как это работает? Всего 4 шага</h2>
           <p className={styles.subtitle}>
             Простой процесс — быстрый результат
           </p>
-        </div>
+        </AnimatedSection>
         
-        <div className={styles.grid}>
-          {STEPS.map(step => (
-            <StepCard 
-              key={step.number}
-              number={step.number}
-              title={step.title}
-            >
-              {step.text}
-            </StepCard>
+        <motion.div 
+          className={styles.grid}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          {STEPS.map((step, index) => (
+            <motion.div key={step.number} variants={stepVariants}>
+              <motion.div
+                whileHover={{ 
+                  scale: 1.05,
+                  transition: { duration: 0.2 }
+                }}
+              >
+                <StepCard 
+                  number={step.number}
+                  title={step.title}
+                >
+                  {step.text}
+                </StepCard>
+              </motion.div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </Container>
     </section>
   )

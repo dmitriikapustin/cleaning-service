@@ -1,6 +1,7 @@
 'use client'
 
-import { Container, Tag } from '../atoms'
+import { motion } from 'framer-motion'
+import { Container, Tag, AnimatedSection, StaggerContainer, StaggerItem } from '../atoms'
 import { Card } from '../molecules'
 import styles from './USPSection.module.css'
 
@@ -39,28 +40,33 @@ const USP_ITEMS = [
 
 /**
  * Template: USPSection
- * Секция преимуществ
+ * Секция преимуществ с анимациями
  */
 export default function USPSection() {
   return (
     <section className={styles.section} id="usp">
       <Container>
-        <div className={styles.header}>
+        <AnimatedSection className={styles.header}>
           <Tag variant="muted">Преимущества</Tag>
           <h2>Почему выбирают нас</h2>
-        </div>
+        </AnimatedSection>
         
-        <div className={styles.grid}>
-          {USP_ITEMS.map(item => (
-            <Card 
-              key={item.title}
-              icon={item.icon}
-              title={item.title}
-            >
-              {item.text}
-            </Card>
+        <StaggerContainer className={styles.grid}>
+          {USP_ITEMS.map((item, index) => (
+            <StaggerItem key={item.title}>
+              <motion.div
+                whileHover={{ y: -8, transition: { duration: 0.2 } }}
+              >
+                <Card 
+                  icon={item.icon}
+                  title={item.title}
+                >
+                  {item.text}
+                </Card>
+              </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </Container>
     </section>
   )

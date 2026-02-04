@@ -1,7 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-import { Container } from '../atoms'
+import { motion } from 'framer-motion'
+import { Container, AnimatedSection, StaggerContainer, StaggerItem } from '../atoms'
 import styles from './GallerySection.module.css'
 
 const GALLERY_ITEMS = [
@@ -19,26 +20,39 @@ export default function GallerySection() {
   return (
     <section className={styles.gallery}>
       <Container>
-        <div className={styles.header}>
+        <AnimatedSection className={styles.header}>
           <span className={styles.tag}>Наши работы</span>
           <h2>Результаты говорят сами за себя</h2>
           <p className={styles.subtitle}>
             Каждый объект — это история о профессионализме и внимании к деталям
           </p>
-        </div>
+        </AnimatedSection>
         
-        <div className={styles.grid}>
+        <StaggerContainer className={styles.grid}>
           {GALLERY_ITEMS.map((item, index) => (
-            <div key={index} className={styles.item}>
-              <Image 
-                src={item.src}
-                alt={item.alt}
-                fill
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
+            <StaggerItem key={index}>
+              <motion.div 
+                className={styles.item}
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Image 
+                  src={item.src}
+                  alt={item.alt}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
+                <motion.div 
+                  className={styles.overlay}
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                >
+                  <span>{item.alt}</span>
+                </motion.div>
+              </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </Container>
     </section>
   )

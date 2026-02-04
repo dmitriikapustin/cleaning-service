@@ -1,7 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-import { Container, Tag, Button } from '../atoms'
+import { motion } from 'framer-motion'
+import { Container, Tag, Button, AnimatedSection, AnimatedText } from '../atoms'
 import { FeatureItem } from '../molecules'
 import styles from './HeroSection.module.css'
 
@@ -13,43 +14,81 @@ const FEATURES = [
 
 /**
  * Template: HeroSection
- * Главный экран лендинга
+ * Главный экран лендинга с анимациями
  */
 export default function HeroSection() {
   return (
     <section className={styles.hero}>
       <Container className={styles.inner}>
         <div className={styles.content}>
-          <Tag>🧹 Скидка 10% для сетевых бизнесов</Tag>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <Tag>🧹 Скидка 10% для сетевых бизнесов</Tag>
+          </motion.div>
           
-          <h1 className={styles.title}>
+          <motion.h1 
+            className={styles.title}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             Чистота. Без управленческих забот
-          </h1>
+          </motion.h1>
           
-          <p className={styles.subtitle}>
+          <motion.p 
+            className={styles.subtitle}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
             Подбор, замены и контроль процессов под ключ для ресторанов и фитнес-клубов. 
             Мы предоставляем сотрудников и полностью берём на себя управление их работой.
-          </p>
+          </motion.p>
           
-          <div className={styles.features}>
-            {FEATURES.map(f => (
-              <FeatureItem key={f.text} icon={f.icon}>
-                {f.text}
-              </FeatureItem>
+          <motion.div 
+            className={styles.features}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            {FEATURES.map((f, i) => (
+              <motion.div
+                key={f.text}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: 0.5 + i * 0.1 }}
+              >
+                <FeatureItem icon={f.icon}>
+                  {f.text}
+                </FeatureItem>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
           
-          <div className={styles.cta}>
-            <Button href="#contact">
+          <motion.div 
+            className={styles.cta}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
+          >
+            <Button href="#contact" size="large">
               Бесплатная консультация
             </Button>
             <span className={styles.ctaHint}>
               Ответим в течение 10 минут
             </span>
-          </div>
+          </motion.div>
         </div>
         
-        <div className={styles.imageWrapper}>
+        <motion.div 
+          className={styles.imageWrapper}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
           <div className={styles.image}>
             <Image 
               src="/images/cleaning-hero.png" 
@@ -59,7 +98,7 @@ export default function HeroSection() {
               style={{ objectFit: 'cover' }}
             />
           </div>
-        </div>
+        </motion.div>
       </Container>
     </section>
   )

@@ -7,3 +7,8 @@ export { default as Icon } from './Icon'
 export { default as Tag } from './Tag'
 export { default as Logo } from './Logo'
 export { default as Container } from './Container'
+
+// Animation components
+export { default as AnimatedSection } from './AnimatedSection'
+export { default as AnimatedText } from './AnimatedText'
+export { StaggerContainer, StaggerItem } from './StaggerContainer'
