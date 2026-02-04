@@ -1,15 +1,24 @@
-name: CI/CD
+name: 🚀 CI/CD Pipeline
 
 on:
   push:
     branches: [main]
+    tags: ["v*"]
   pull_request:
     branches: [main]
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/mslclean
+
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   # Lint и проверка сборки
-  build:
-    name: 🔨 Build & Lint
+  test:
+    name: 🧪 Build & Lint
     runs-on: ubuntu-latest
     
     steps:
@@ -31,28 +40,57 @@ jobs:
       - name: 🔨 Build
         run: npm run build
 
-  # Деплой на сервер (только если секреты настроены)
-  deploy:
-    name: 🚀 Deploy to Production
-    needs: build
+  # Сборка и публикация Docker образа
+  build-and-push:
+    name: 🐳 Build & Push Docker Image
     runs-on: ubuntu-latest
-    if: |
-      github.ref == 'refs/heads/main' && 
-      github.event_name == 'push' &&
-      vars.DEPLOY_ENABLED == 'true'
+    needs: test
+    if: github.event_name == 'push'
     
     steps:
-      - name: 🚀 Deploy to VPS
-        uses: appleboy/ssh-action@master
+      - name: 📂 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐳 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🔑 Login to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
-          host: ${{ secrets.HOST }}
-          username: root
-          key: ${{ secrets.PRIVATE_KEY }}
-          port: 22
-          script: |
-            cd /var/www/mslclean.ru || exit 1
-            git pull origin main
-            npm ci --legacy-peer-deps
-            npm run build
-            pm2 restart mslclean || pm2 start npm --name "mslclean" -- start
-            echo "✅ Deployed successfully"
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🏷️ Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=semver,pattern={{version}}
+
+      - name: 🏗️ Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: 📦 Summary
+        run: |
+          echo "### 🐳 Docker Image Published" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Image:** \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Pull with:" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
