@@ -1,5 +1,6 @@
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
+import { MobileMenu } from '@/components/molecules'
 
 const inter = Inter({ 
   subsets: ['latin', 'cyrillic'], 
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
     <html lang="ru" className={`${inter.variable} ${playfair.variable}`}>
       <body>
         {children}
+        <MobileMenu />
       </body>
     </html>
   )
