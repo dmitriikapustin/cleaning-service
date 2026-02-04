@@ -1,4 +1,4 @@
-import { Inter } from 'next/font/google'
+import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({ 
@@ -6,6 +6,13 @@ const inter = Inter({
   variable: '--font-inter',
   display: 'swap',
   weight: ['300', '400', '500', '600', '700', '800'] 
+})
+
+const playfair = Playfair_Display({
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-serif',
+  display: 'swap',
+  weight: ['400', '500', '600', '700']
 })
 
 export const metadata = {
@@ -21,7 +28,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ru" className={inter.variable}>
+    <html lang="ru" className={`${inter.variable} ${playfair.variable}`}>
       <body>
         {children}
       </body>
