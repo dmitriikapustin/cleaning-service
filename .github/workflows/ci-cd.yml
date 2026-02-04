@@ -31,12 +31,15 @@ jobs:
       - name: 🔨 Build
         run: npm run build
 
-  # Деплой на сервер
+  # Деплой на сервер (только если секреты настроены)
   deploy:
     name: 🚀 Deploy to Production
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: |
+      github.ref == 'refs/heads/main' && 
+      github.event_name == 'push' &&
+      vars.DEPLOY_ENABLED == 'true'
     
     steps:
       - name: 🚀 Deploy to VPS
