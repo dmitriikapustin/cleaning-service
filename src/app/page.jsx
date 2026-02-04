@@ -652,52 +652,67 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Footer */}
+          {/* Footer — Samara Mars Style */}
           <footer className={styles.footer}>
-            <div className={styles.sectionPadding}>
-              <div className={styles.footerContent}>
-                <div className={styles.footerTop}>
-                  <div className={styles.footerBrand}>
-                    <Link href="/" className={styles.brand}>
-                      MSL<span>Clean</span>
-                    </Link>
-                    <p>Аутстафинг клинингового персонала для ресторанов и фитнес-клубов</p>
-                    <div className={styles.footerPromo}>
-                      <span className={styles.promoTag}>🎁 Скидка 10%</span>
-                      <span>для сетевых бизнесов и крупных объектов</span>
-                    </div>
-                  </div>
-                  <div className={styles.footerNav}>
-                    <div className={styles.footerColumn}>
-                      <h5>Навигация</h5>
-                      <div className={styles.footerDivider} />
-                      <Link href="/">Главная</Link>
-                      <Link href="#about">О компании</Link>
-                      <Link href="#services">Услуги</Link>
-                      <Link href="#portfolio">Клиенты</Link>
-                    </div>
-                    <div className={styles.footerColumn}>
-                      <h5>Контакты</h5>
-                      <div className={styles.footerDivider} />
-                      <a href="tel:+79999999999">+7 (999) 999-99-99</a>
-                      <a href="mailto:info@mslclean.ru">info@mslclean.ru</a>
-                      <span>Москва, Россия</span>
-                      <span className={styles.footerHint}>Работаем 24/7</span>
-                    </div>
+            <div className={styles.footerInner}>
+              {/* Top Grid */}
+              <div className={styles.footerGrid}>
+                {/* Brand + Newsletter */}
+                <div className={styles.footerBrand}>
+                  <div className={styles.footerLogo}>MSL CLEAN</div>
+                  <p className={styles.footerTagline}>Будьте в курсе новостей</p>
+                  <div className={styles.newsletterForm}>
+                    <input type="email" placeholder="Email" className={styles.newsletterInput} />
+                    <button className={styles.newsletterBtn}>→</button>
                   </div>
                 </div>
-                <div className={styles.footerBottom}>
-                  <a href="mailto:info@mslclean.ru" className={styles.footerEmail}>
-                    info@mslclean.ru
-                  </a>
-                  <div className={styles.footerSocial}>
-                    <a href="#">Telegram</a>
-                    <a href="#">WhatsApp</a>
+
+                {/* Navigation */}
+                <div className={styles.footerColumn}>
+                  <h5 className={styles.footerHeading}>Навигация</h5>
+                  <nav className={styles.footerLinks}>
+                    <Link href="/">Главная</Link>
+                    <Link href="#services">Услуги</Link>
+                    <Link href="#about">О компании</Link>
+                    <Link href="#portfolio">Клиенты</Link>
+                  </nav>
+                </div>
+
+                {/* Location */}
+                <div className={styles.footerColumn}>
+                  <h5 className={styles.footerHeading}>Контакты</h5>
+                  <div className={styles.footerAddress}>
+                    <span>Москва, Россия</span>
+                    <a href="tel:+79999999999">+7 (999) 999-99-99</a>
+                    <span>Работаем 24/7</span>
                   </div>
                 </div>
-                <div className={styles.footerMisc}>
-                  <span>© 2024 MSL Clean. Все права защищены</span>
+
+                {/* Promo */}
+                <div className={styles.footerColumn}>
+                  <h5 className={styles.footerHeading}>Акция</h5>
+                  <div className={styles.footerPromo}>
+                    <span className={styles.promoTag}>🎁 Скидка 10%</span>
+                    <span>для сетевых бизнесов</span>
+                  </div>
                 </div>
+              </div>
+
+              {/* Big Email */}
+              <div className={styles.footerEmailRow}>
+                <a href="mailto:info@mslclean.ru" className={styles.footerBigEmail}>
+                  info@mslclean.ru
+                </a>
+                <div className={styles.footerSocial}>
+                  <a href="#" className={styles.socialBtn}>Telegram</a>
+                  <a href="#" className={styles.socialBtn}>WhatsApp</a>
+                </div>
+              </div>
+
+              {/* Bottom */}
+              <div className={styles.footerBottom}>
+                <a href="#" className={styles.footerPolicy}>Политика конфиденциальности</a>
+                <span className={styles.footerCopyright}>MSL Clean © 2024. Все права защищены</span>
               </div>
             </div>
           </footer>
