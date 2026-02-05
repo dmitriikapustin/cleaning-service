@@ -195,47 +195,43 @@ export default function HomePage() {
 
         {/* ===================== HERO ===================== */}
         <section className={styles.heroSection}>
-          <div className={styles.heroPadding}>
-            <div className={styles.heroContent}>
-              {/* Title - Top Left */}
-              <div className={styles.heroTitleWrapper}>
-                <motion.h1 
-                  className={styles.heroTitle}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                  Чистота.<br/>Без управленческих забот
-                </motion.h1>
-              </div>
-
-              {/* Description - Bottom Right */}
-              <motion.div 
-                className={styles.heroDescriptionBox}
+          <div className={styles.heroContainer}>
+            {/* Image Card */}
+            <div className={styles.heroCard}>
+              <Image 
+                src="/images/hero-bg.jpg"
+                alt="Современный офис"
+                fill
+                priority
+                className={styles.heroImage}
+              />
+              <div className={styles.heroOverlay} />
+              
+              {/* Title on image */}
+              <motion.h1 
+                className={styles.heroTitle}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <p>
+                Чистота.<br/>Без управленческих забот
+              </motion.h1>
+              
+              {/* Content box */}
+              <motion.div 
+                className={styles.heroContent}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                <p className={styles.heroText}>
                   Подбор, замены и контроль клинингового персонала под ключ. 
-                  Наша команда экспертов обеспечит чистоту на вашем объекте без управленческих забот.
+                  Наша команда экспертов обеспечит чистоту на вашем объекте.
                 </p>
                 <Link href="#contact" className={styles.heroButton}>
                   Связаться с нами
                 </Link>
               </motion.div>
-
-              {/* Background Image */}
-              <div className={styles.heroBkg}>
-                <Image 
-                  src="/images/hero-bg.jpg"
-                  alt="Современный офис"
-                  fill
-                  priority
-                  className={styles.heroImage}
-                />
-                <div className={styles.heroOverlay} />
-              </div>
             </div>
           </div>
         </section>

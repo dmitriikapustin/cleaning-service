@@ -102,104 +102,81 @@
 
 /* ===================== HERO ===================== */
 .heroSection {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: flex-end;
   padding-top: 80px;
-  isolation: isolate; /* Создаёт stacking context — фото не вылезет */
+}
+
+.heroContainer {
+  padding: 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.heroCard {
+  position: relative;
+  border-radius: 10px;
   overflow: hidden;
-  border-radius: 0 0 32px 32px; /* Скругление снизу */
+  min-height: 600px;
 }
 
-.heroPadding {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  padding: 2rem;
+.heroImage {
+  object-fit: cover;
+  z-index: 0;
 }
 
-.heroContent {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr auto;
-  gap: 2rem;
-  min-height: calc(100vh - 120px);
-}
-
-.heroTitleWrapper {
-  grid-column: 1;
-  grid-row: 1;
-  align-self: start;
-  padding-top: 4rem;
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 17, 17, 0.2);
+  z-index: 1;
 }
 
 .heroTitle {
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 400;
-  line-height: 1.05;
-  color: var(--color-primary);
-  letter-spacing: -0.02em;
-  font-family: var(--font-serif), Georgia, 'Times New Roman', serif;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  right: 24px;
+  z-index: 2;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.1;
+  color: white;
+  letter-spacing: -0.01em;
 }
 
-.heroDescriptionBox {
-  grid-column: 2;
-  grid-row: 2;
-  align-self: end;
-  justify-self: end;
+.heroContent {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 2;
   background: white;
-  padding: 2rem 2.5rem;
-  border-radius: 24px;
-  max-width: 440px;
-  margin-right: clamp(1.5rem, 4vw, 4rem);
-  margin-bottom: clamp(1.5rem, 4vw, 4rem);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 24px;
 }
 
-.heroDescriptionBox p {
-  font-size: 0.9375rem;
-  line-height: 1.65;
+.heroText {
+  font-size: 0.9rem;
+  line-height: 1.5;
   color: var(--color-text);
-  margin-bottom: 1.25rem;
+  margin-bottom: 16px;
 }
 
 .heroButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.875rem 1.75rem;
+  padding: 12px 24px;
   background: var(--color-primary);
   color: white;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   text-decoration: none;
-  border-radius: 50vw;
-  transition: all 0.3s;
+  border-radius: 50px;
+  transition: background 0.3s;
 }
 
 .heroButton:hover {
   background: var(--color-primary-dark);
-  transform: translateY(-2px);
-}
-
-.heroBkg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  border-radius: inherit; /* Наследует скругление от родителя */
-}
-
-.heroImage {
-  object-fit: cover;
-}
-
-.heroOverlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.15);
 }
 
 /* ===================== BUTTON ===================== */
@@ -970,6 +947,28 @@
   color: var(--color-text-muted);
 }
 
+/* ===================== RESPONSIVE - DESKTOP ===================== */
+@media (min-width: 992px) {
+  .heroCard {
+    min-height: 80vh;
+  }
+
+  .heroTitle {
+    top: 48px;
+    left: 48px;
+    right: auto;
+    max-width: 500px;
+    font-size: 3.5rem;
+  }
+
+  .heroContent {
+    bottom: 32px;
+    left: auto;
+    right: 32px;
+    max-width: 400px;
+  }
+}
+
 /* ===================== RESPONSIVE - TABLET ===================== */
 @media (max-width: 991px) {
   .navMenu {
@@ -982,25 +981,6 @@
 
   .navPhone {
     display: none;
-  }
-
-  .heroContent {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto;
-  }
-
-  .heroTitleWrapper {
-    grid-column: 1;
-    padding-top: 2rem;
-  }
-
-  .heroDescriptionBox {
-    grid-column: 1;
-    grid-row: 2;
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    justify-self: stretch;
   }
 
   .problemsGrid {
@@ -1065,16 +1045,12 @@
     font-size: 0.75rem;
   }
 
-  .heroPadding {
-    padding: 20px;
+  .heroCard {
+    min-height: 500px;
   }
 
   .heroTitle {
-    font-size: 2rem;
-  }
-
-  .heroDescriptionBox {
-    padding: 1.5rem;
+    font-size: 1.75rem;
   }
 
   .sectionPadding {
