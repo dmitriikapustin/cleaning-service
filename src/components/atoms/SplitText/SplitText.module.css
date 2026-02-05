@@ -1,12 +1,9 @@
-/* Скрытый контейнер для измерения */
-.measure {
-  position: absolute !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  white-space: normal;
+/* Контейнер для измерения (скрытый) */
+.measuring {
+  visibility: hidden;
 }
 
-/* Видимый контейнер */
+/* Контейнер анимации */
 .container {
   display: block;
 }
@@ -15,6 +12,9 @@
 .lineWrapper {
   display: block;
   overflow: hidden;
+  /* Небольшой padding снизу чтобы не обрезало буквы типа g, y */
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
 }
 
 /* Строка — анимируется */

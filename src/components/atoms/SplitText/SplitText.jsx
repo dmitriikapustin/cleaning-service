@@ -1,136 +1,123 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import SplitType from 'split-type'
 import styles from './SplitText.module.css'
 
 /**
- * SplitText — разбивает текст на строки и анимирует каждую отдельно
- * Автоматически определяет переносы строк
+ * SplitText — разбивает текст на строки с помощью split-type
+ * Анимирует каждую строку отдельно
  */
 export default function SplitText({ 
   children, 
   as: Tag = 'div',
   delay = 0,
-  stagger = 0.1,
+  stagger = 0.08,
   className = '',
   ...props 
 }) {
-  const containerRef = useRef(null)
-  const measureRef = useRef(null)
+  const textRef = useRef(null)
   const [lines, setLines] = useState([])
-  const [isReady, setIsReady] = useState(false)
+  const splitInstance = useRef(null)
 
-  // Разбиваем текст на строки после рендера
   useEffect(() => {
-    if (!measureRef.current || typeof children !== 'string') {
-      // Если children не строка, просто показываем как есть
-      setLines([children])
-      setIsReady(true)
+    if (!textRef.current || typeof children !== 'string') {
       return
     }
 
-    const measureLines = () => {
-      const container = measureRef.current
-      if (!container) return
+    // Сначала рендерим оригинальный текст
+    textRef.current.textContent = children
 
-      const words = children.split(' ')
-      const lineArray = []
-      let currentLine = []
-      let lastTop = null
+    // Создаём split instance
+    splitInstance.current = new SplitType(textRef.current, {
+      types: 'lines',
+      tagName: 'span'
+    })
 
-      // Очищаем и заново добавляем слова для измерения
-      container.innerHTML = ''
-      
-      words.forEach((word, i) => {
-        const span = document.createElement('span')
-        span.textContent = word + ' '
-        span.style.whiteSpace = 'nowrap'
-        container.appendChild(span)
+    // Получаем строки
+    const lineElements = splitInstance.current.lines || []
+    setLines(lineElements.map(el => el.textContent))
 
-        const rect = span.getBoundingClientRect()
-        
-        if (lastTop === null) {
-          lastTop = rect.top
-        }
-
-        if (rect.top > lastTop + 2) {
-          // Новая строка
-          if (currentLine.length > 0) {
-            lineArray.push(currentLine.join(' '))
-          }
-          currentLine = [word]
-          lastTop = rect.top
-        } else {
-          currentLine.push(word)
-        }
-      })
-
-      // Последняя строка
-      if (currentLine.length > 0) {
-        lineArray.push(currentLine.join(' '))
-      }
-
-      setLines(lineArray)
-      setIsReady(true)
-    }
-
-    // Небольшая задержка для корректного измерения
-    const timer = setTimeout(measureLines, 50)
-    
-    // Пересчитываем при ресайзе
-    window.addEventListener('resize', measureLines)
-    
+    // Cleanup
     return () => {
-      clearTimeout(timer)
-      window.removeEventListener('resize', measureLines)
+      if (splitInstance.current) {
+        splitInstance.current.revert()
+      }
     }
   }, [children])
 
+  // Пересчёт при ресайзе
+  useEffect(() => {
+    const handleResize = () => {
+      if (splitInstance.current && textRef.current) {
+        splitInstance.current.revert()
+        textRef.current.textContent = children
+        splitInstance.current = new SplitType(textRef.current, {
+          types: 'lines',
+          tagName: 'span'
+        })
+        const lineElements = splitInstance.current.lines || []
+        setLines(lineElements.map(el => el.textContent))
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [children])
+
   // Варианты анимации
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: stagger,
+        delayChildren: delay
+      }
+    }
+  }
+
   const lineVariants = {
     hidden: { y: '100%' },
-    visible: (i) => ({
+    visible: {
       y: 0,
       transition: {
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
-        delay: delay + (i * stagger)
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1]
       }
-    })
+    }
+  }
+
+  // Если строки ещё не готовы — показываем скрытый оригинал для измерения
+  if (lines.length === 0) {
+    return (
+      <Tag 
+        ref={textRef} 
+        className={`${className} ${styles.measuring}`}
+        {...props}
+      >
+        {children}
+      </Tag>
+    )
   }
 
   return (
-    <>
-      {/* Скрытый контейнер для измерения */}
-      <Tag 
-        ref={measureRef} 
-        className={`${className} ${styles.measure}`}
-        aria-hidden="true"
-        {...props}
-      />
-      
-      {/* Видимый контейнер с анимацией */}
-      <Tag 
-        ref={containerRef} 
-        className={`${className} ${styles.container}`}
-        {...props}
+    <Tag className={className} {...props}>
+      <motion.span
+        className={styles.container}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-50px' }}
       >
-        {isReady && lines.map((line, i) => (
+        {lines.map((line, i) => (
           <span key={i} className={styles.lineWrapper}>
-            <motion.span
-              className={styles.line}
-              custom={i}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-50px' }}
-              variants={lineVariants}
-            >
+            <motion.span className={styles.line} variants={lineVariants}>
               {line}
             </motion.span>
           </span>
         ))}
-      </Tag>
-    </>
+      </motion.span>
+    </Tag>
   )
 }
