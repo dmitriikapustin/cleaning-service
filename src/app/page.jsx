@@ -315,14 +315,10 @@ export default function HomePage() {
                       />
                     </div>
                     <div className={styles.solutionContent}>
-                      <div className={styles.solutionNum}>
-                        <span>{solution.num}</span>
-                      </div>
                       <h3 className={styles.solutionTitle}>{solution.title}</h3>
                       <p className={styles.solutionDesc}>{solution.desc}</p>
                       <div className={styles.solutionHighlight}>{solution.highlight}</div>
                     </div>
-                    <div className={styles.solutionLine} />
                   </div>
                 </CardReveal>
               ))}
