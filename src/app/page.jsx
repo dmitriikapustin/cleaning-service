@@ -20,20 +20,6 @@ import styles from './page.module.css'
 import { MobileMenu } from '@/components/molecules'
 import { SplitText } from '@/components/atoms'
 
-// Анимация маски — простая (для коротких однострочных текстов)
-const MaskText = ({ children, delay = 0, className = '' }) => (
-  <div style={{ overflow: 'hidden' }} className={className}>
-    <motion.div
-      initial={{ y: '100%' }}
-      whileInView={{ y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay }}
-    >
-      {children}
-    </motion.div>
-  </div>
-)
-
 // Анимация для карточек — fade + slide up
 const CardReveal = ({ children, delay = 0, className = '' }) => (
   <motion.div
@@ -251,9 +237,7 @@ export default function HomePage() {
         <section className={styles.aboutSection} id="about">
           <div className={styles.sectionPadding}>
             <div className={styles.aboutContent}>
-              <MaskText>
-                <div className={styles.tag}>Добро пожаловать в MSL Clean</div>
-              </MaskText>
+              <SplitText className={styles.tag}>Добро пожаловать в MSL Clean</SplitText>
               <SplitText as="h2" className={styles.aboutTitle} delay={0.1}>
                 Ваш надёжный партнёр в аутстафинге клинингового персонала
               </SplitText>
@@ -281,15 +265,9 @@ export default function HomePage() {
         <section className={styles.problemsSection} id="problems">
           <div className={styles.sectionPadding}>
             <div className={styles.sectionTop}>
-              <MaskText>
-                <div className={styles.tag}>Знакомо?</div>
-              </MaskText>
-              <MaskText delay={0.1}>
-                <h2 className={styles.sectionTitle}>Вам знакомо это?</h2>
-              </MaskText>
-              <MaskText delay={0.2}>
-                <p className={styles.sectionSubtitle}>Это обходится вам дорого</p>
-              </MaskText>
+              <SplitText className={styles.tag}>Знакомо?</SplitText>
+              <SplitText as="h2" className={styles.sectionTitle} delay={0.1}>Вам знакомо это?</SplitText>
+              <SplitText as="p" className={styles.sectionSubtitle} delay={0.2}>Это обходится вам дорого</SplitText>
             </div>
 
             <div className={styles.problemsGrid}>
@@ -314,15 +292,9 @@ export default function HomePage() {
         <section className={styles.solutionSection} id="services">
           <div className={styles.sectionPadding}>
             <div className={styles.sectionTop}>
-              <MaskText>
-                <div className={styles.tag}>Решение</div>
-              </MaskText>
-              <MaskText delay={0.1}>
-                <h2 className={styles.sectionTitle}>Аутстафинг клинингового персонала</h2>
-              </MaskText>
-              <MaskText delay={0.2}>
-                <p className={styles.sectionSubtitle}>Мы берём всю ответственность на себя</p>
-              </MaskText>
+              <SplitText className={styles.tag}>Решение</SplitText>
+              <SplitText as="h2" className={styles.sectionTitle} delay={0.1}>Аутстафинг клинингового персонала</SplitText>
+              <SplitText as="p" className={styles.sectionSubtitle} delay={0.2}>Мы берём всю ответственность на себя</SplitText>
             </div>
 
             <div className={styles.solutionGrid}>
@@ -349,12 +321,8 @@ export default function HomePage() {
         <section className={styles.uspSection}>
           <div className={styles.sectionPadding}>
             <div className={styles.sectionTop}>
-              <MaskText>
-                <div className={styles.tag}>Преимущества</div>
-              </MaskText>
-              <MaskText delay={0.1}>
-                <h2 className={styles.sectionTitle}>Почему выбирают нас</h2>
-              </MaskText>
+              <SplitText className={styles.tag}>Преимущества</SplitText>
+              <SplitText as="h2" className={styles.sectionTitle} delay={0.1}>Почему выбирают нас</SplitText>
             </div>
 
             <div className={styles.uspGrid}>
@@ -380,12 +348,8 @@ export default function HomePage() {
         <section className={styles.stepsSection}>
           <div className={styles.sectionPadding}>
             <div className={styles.sectionTop}>
-              <MaskText>
-                <div className={styles.tag}>Процесс</div>
-              </MaskText>
-              <MaskText delay={0.1}>
-                <h2 className={styles.sectionTitle}>Как это работает? Всего 4 шага</h2>
-              </MaskText>
+              <SplitText className={styles.tag}>Процесс</SplitText>
+              <SplitText as="h2" className={styles.sectionTitle} delay={0.1}>Как это работает? Всего 4 шага</SplitText>
             </div>
 
             <div className={styles.stepsGrid}>
@@ -407,12 +371,8 @@ export default function HomePage() {
           <div className={styles.sectionPadding}>
             <div className={styles.portfolioTop}>
               <div className={styles.portfolioInfo}>
-                <MaskText>
-                  <div className={styles.tag}>Клиенты</div>
-                </MaskText>
-                <MaskText delay={0.1}>
-                  <h2>Наши объекты и проекты</h2>
-                </MaskText>
+                <SplitText className={styles.tag}>Клиенты</SplitText>
+                <SplitText as="h2" delay={0.1}>Наши объекты и проекты</SplitText>
               </div>
               <div className={styles.sliderArrows}>
                 <button className={`${styles.sliderArrow} swiper-prev`}>
