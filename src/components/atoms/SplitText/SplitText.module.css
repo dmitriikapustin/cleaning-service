@@ -1,16 +1,11 @@
-/* Контейнер */
-.container {
-  display: inline;
-}
-
-/* Обёртка слова — маска */
-.wordWrapper {
+/* Маска для каждого слова */
+.mask {
   display: inline-block;
   overflow: hidden;
-  vertical-align: bottom;
+  vertical-align: top;
 }
 
-/* Слово */
+/* Слово внутри маски */
 .word {
   display: inline-block;
 }

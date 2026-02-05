@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import styles from './SplitText.module.css'
 
 /**
- * SplitText — разбивает текст на слова и анимирует каждое
+ * SplitText — каждое слово со своей маской
  */
 export default function SplitText({ 
   children, 
@@ -14,50 +14,29 @@ export default function SplitText({
   className = '',
   ...props 
 }) {
-  // Разбиваем текст на слова
   const words = typeof children === 'string' 
     ? children.split(' ').filter(w => w.length > 0)
     : [children]
 
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: stagger,
-        delayChildren: delay
-      }
-    }
-  }
-
-  const wordVariants = {
-    hidden: { y: '100%', opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.4,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    }
-  }
-
   return (
     <Tag className={className} {...props}>
-      <motion.span
-        className={styles.container}
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-50px' }}
-      >
-        {words.map((word, i) => (
-          <span key={i} className={styles.wordWrapper}>
-            <motion.span className={styles.word} variants={wordVariants}>
-              {word}{i < words.length - 1 ? '\u00A0' : ''}
-            </motion.span>
-          </span>
-        ))}
-      </motion.span>
+      {words.map((word, i) => (
+        <span key={i} className={styles.mask}>
+          <motion.span
+            className={styles.word}
+            initial={{ y: '100%' }}
+            whileInView={{ y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{
+              duration: 0.5,
+              ease: [0.22, 1, 0.36, 1],
+              delay: delay + (i * stagger)
+            }}
+          >
+            {word}{i < words.length - 1 ? ' ' : ''}
+          </motion.span>
+        </span>
+      ))}
     </Tag>
   )
 }
