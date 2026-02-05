@@ -9,21 +9,25 @@ const SOLUTIONS = [
     icon: 'Clock',
     title: 'Готовый персонал 24/7',
     text: 'Подбираем по 7 параметрам: опыт, документы, навыки, рекомендации. Готовый сотрудник за 24-48 часов.',
+    image: '/images/solution-staff.png',
   },
   {
     icon: 'Zap',
     title: 'Замена без остановки',
     text: 'Заболел — пришлём замену той же смены. Контроль 24/7, вы не заметите разницы.',
+    image: '/images/solution-replacement.png',
   },
   {
     icon: 'FileText',
     title: 'Юридическое оформление',
     text: 'Договор, безналичная оплата, фиксированная цена. Экономия на ФОТ, налогах, ПФР.',
+    image: '/images/solution-legal.png',
   },
   {
     icon: 'BadgeCheck',
     title: 'Контроль качества',
     text: 'Каждый объект сопровождает менеджер. Не нравится — замена в течение дня.',
+    image: '/images/solution-quality.png',
   },
 ]
 
@@ -56,6 +60,7 @@ export default function SolutionSection() {
                 key={item.title}
                 icon={item.icon}
                 title={item.title}
+                image={item.image}
               >
                 {item.text}
               </SolutionItem>
