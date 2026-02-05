@@ -1,9 +1,9 @@
 /* =====================================================
-   MobileMenu — Fullscreen белое меню
+   MobileMenu — Fullscreen с анимацией маски
    ===================================================== */
 
-/* Бургер кнопка */
-.burgerButton {
+/* Кнопка меню */
+.menuButton {
   display: none;
   align-items: center;
   justify-content: center;
@@ -13,180 +13,128 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
   position: relative;
   z-index: 1001;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (max-width: 991px) {
-  .burgerButton {
+  .menuButton {
     display: flex;
   }
 }
 
-/* Burger Icon */
-.burgerIcon {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
+/* Иконка бургер/крестик */
+.menuIcon {
   width: 24px;
-  height: 24px;
+  height: 16px;
+  position: relative;
 }
 
-.burgerLine {
-  display: block;
-  width: 24px;
+.menuIcon span {
+  position: absolute;
+  left: 0;
+  width: 100%;
   height: 2px;
   background: var(--color-text);
-  border-radius: 1px;
   transition: all 0.3s ease;
-  transform-origin: center;
 }
 
-/* Burger → X */
-.burgerButton.active .burgerLine:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
+.menuIcon span:nth-child(1) { top: 0; }
+.menuIcon span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.menuIcon span:nth-child(3) { bottom: 0; }
+
+/* Бургер → Крестик */
+.menuIcon.open span:nth-child(1) {
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
 }
 
-.burgerButton.active .burgerLine:nth-child(2) {
+.menuIcon.open span:nth-child(2) {
   opacity: 0;
+  transform: translateY(-50%) scaleX(0);
 }
 
-.burgerButton.active .burgerLine:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
+.menuIcon.open span:nth-child(3) {
+  bottom: 50%;
+  transform: translateY(50%) rotate(-45deg);
 }
 
-/* ===================== FULLSCREEN OVERLAY ===================== */
-.menuOverlay {
+/* Fullscreen меню */
+.menu {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
   z-index: 1000;
-  background-color: #ffffff !important;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 100px 24px 40px;
 }
 
 @media (min-width: 992px) {
-  .menuOverlay {
+  .menu {
     display: none !important;
   }
 }
 
-/* Menu Content */
-.menuContent {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-}
-
-/* Header */
-.menuHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 32px;
-}
-
-/* Logo */
-.menuLogo {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--color-text);
-  letter-spacing: -0.02em;
-}
-
-.menuLogo span {
-  color: var(--color-secondary);
-}
-
-/* Close button */
-.closeButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: var(--color-text);
-}
-
-/* Navigation */
-.menuNav {
-  display: flex;
-  flex-direction: column;
+/* Навигация */
+.nav {
   flex: 1;
-  justify-content: center;
-  gap: 0;
-}
-
-/* Menu Link */
-.menuLink {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 20px 0;
-  text-decoration: none;
-  border-bottom: 1px solid var(--color-border, #eee);
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
 }
 
-.menuLink:first-child {
-  border-top: 1px solid var(--color-border, #eee);
+/* Wrapper для маски */
+.linkWrapper {
+  overflow: hidden;
 }
 
-.menuNumber {
-  font-size: 0.875rem;
-  color: var(--color-text-muted, #999);
-  font-weight: 400;
-  min-width: 28px;
-}
-
-.menuLabel {
-  font-size: 1.5rem;
+/* Ссылки */
+.link {
+  display: block;
+  font-size: 2rem;
   font-weight: 500;
   color: var(--color-text);
-  letter-spacing: -0.01em;
+  text-decoration: none;
+  padding: 12px 0;
 }
 
-/* CTA Button */
-.menuCta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* CTA кнопка */
+.cta {
+  display: inline-block;
+  margin-top: 24px;
   padding: 16px 32px;
-  margin-top: 32px;
-  border-radius: 50px;
   background: var(--color-primary);
   color: white;
-  font-weight: 600;
   font-size: 1rem;
+  font-weight: 500;
   text-decoration: none;
+  border-radius: 50px;
 }
 
 /* Footer */
-.menuFooter {
+.footer {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-top: 32px;
   padding-top: 24px;
-  border-top: 1px solid var(--color-border, #eee);
+  border-top: 1px solid #eee;
 }
 
-.menuPhone {
-  font-size: 1.125rem;
+.footer a {
+  font-size: 1.25rem;
   font-weight: 600;
   color: var(--color-text);
   text-decoration: none;
 }
 
-.menuHint {
+.footer span {
   font-size: 0.875rem;
-  color: var(--color-text-muted, #999);
+  color: #999;
 }

@@ -11,16 +11,12 @@ const NAV_ITEMS = [
   { href: '#contact', label: 'Контакты' },
 ]
 
-/**
- * MobileMenu — Fullscreen белое меню
- */
 export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleMenu = () => setIsOpen(!isOpen)
   const closeMenu = () => setIsOpen(false)
 
-  // Блокируем скролл при открытом меню
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
@@ -32,51 +28,49 @@ export default function MobileMenu() {
     }
   }, [isOpen])
 
-  // Контейнер для stagger
+  // Stagger для элементов
   const containerVariants = {
-    closed: {
+    hidden: {},
+    visible: {
       transition: {
-        staggerChildren: 0.03,
-        staggerDirection: -1,
+        staggerChildren: 0.08,
+        delayChildren: 0.2,
       }
     },
-    open: {
+    exit: {
       transition: {
-        delayChildren: 0.1,
-        staggerChildren: 0.06,
+        staggerChildren: 0.05,
+        staggerDirection: -1,
       }
     }
   }
 
-  // Пункты меню
-  const itemVariants = {
-    closed: {
-      y: 30,
-      opacity: 0,
-    },
-    open: {
+  // Маска — текст выезжает снизу вверх
+  const maskVariants = {
+    hidden: { y: '100%' },
+    visible: { 
       y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.4,
-        ease: [0.22, 1, 0.36, 1],
-      }
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+    },
+    exit: { 
+      y: '100%',
+      transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] }
     }
   }
 
   return (
     <>
-      {/* Бургер кнопка */}
+      {/* Бургер / Крестик */}
       <button
-        className={`${styles.burgerButton} ${isOpen ? styles.active : ''}`}
+        className={styles.menuButton}
         onClick={toggleMenu}
         aria-label={isOpen ? 'Закрыть меню' : 'Открыть меню'}
         aria-expanded={isOpen}
       >
-        <div className={styles.burgerIcon}>
-          <span className={styles.burgerLine} />
-          <span className={styles.burgerLine} />
-          <span className={styles.burgerLine} />
+        <div className={`${styles.menuIcon} ${isOpen ? styles.open : ''}`}>
+          <span />
+          <span />
+          <span />
         </div>
       </button>
 
@@ -84,66 +78,53 @@ export default function MobileMenu() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className={styles.menuOverlay}
-            initial={{ opacity: 0, y: '-100%' }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: '-100%' }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className={styles.menu}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
           >
-            {/* Контент меню */}
             <motion.nav
-              className={styles.menuContent}
+              className={styles.nav}
               variants={containerVariants}
-              initial="closed"
-              animate="open"
-              exit="closed"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
             >
-              {/* Шапка с лого и крестиком */}
-              <div className={styles.menuHeader}>
-                <motion.div className={styles.menuLogo} variants={itemVariants}>
-                  MSL<span>Clean</span>
-                </motion.div>
-                <button className={styles.closeButton} onClick={closeMenu}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Навигация */}
-              <div className={styles.menuNav}>
-                {NAV_ITEMS.map((item, index) => (
+              {NAV_ITEMS.map((item, i) => (
+                <div key={item.href} className={styles.linkWrapper}>
                   <motion.a
-                    key={item.href}
                     href={item.href}
-                    className={styles.menuLink}
-                    variants={itemVariants}
+                    className={styles.link}
+                    variants={maskVariants}
                     onClick={closeMenu}
                   >
-                    <span className={styles.menuNumber}>0{index + 1}</span>
-                    <span className={styles.menuLabel}>{item.label}</span>
+                    {item.label}
                   </motion.a>
-                ))}
+                </div>
+              ))}
+              
+              <div className={styles.linkWrapper}>
+                <motion.a
+                  href="#contact"
+                  className={styles.cta}
+                  variants={maskVariants}
+                  onClick={closeMenu}
+                >
+                  Получить расчёт
+                </motion.a>
               </div>
-
-              {/* CTA */}
-              <motion.a
-                href="#contact"
-                className={styles.menuCta}
-                variants={itemVariants}
-                onClick={closeMenu}
-              >
-                Получить расчёт
-              </motion.a>
-
-              {/* Контакты */}
-              <motion.div className={styles.menuFooter} variants={itemVariants}>
-                <a href="tel:+79999999999" className={styles.menuPhone}>
-                  +7 (999) 999-99-99
-                </a>
-                <span className={styles.menuHint}>Работаем 24/7</span>
-              </motion.div>
             </motion.nav>
+
+            <motion.div 
+              className={styles.footer}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { delay: 0.5 } }}
+              exit={{ opacity: 0 }}
+            >
+              <a href="tel:+79999999999">+7 (999) 999-99-99</a>
+              <span>Работаем 24/7</span>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
