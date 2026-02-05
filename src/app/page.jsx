@@ -18,6 +18,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import styles from './page.module.css'
 import { MobileMenu } from '@/components/molecules'
+import { Logo } from '@/components/atoms'
 import { SplitText, AnimatedTag } from '@/components/atoms'
 
 // Анимация для карточек — fade + slide up
@@ -175,9 +176,7 @@ export default function HomePage() {
         {/* ===================== NAVBAR ===================== */}
         <nav className={styles.navbar}>
           <div className={styles.navbarInner}>
-            <Link href="/" className={styles.brand}>
-              MSL<span>Clean</span>
-            </Link>
+<Logo />
             <div className={styles.navMenu}>
               <Link href="#about" className={styles.navLink}>О компании</Link>
               <Link href="#services" className={styles.navLink}>Услуги</Link>
@@ -497,7 +496,7 @@ export default function HomePage() {
               <div className={styles.footerGrid}>
                 {/* Brand + Newsletter */}
                 <div className={styles.footerBrand}>
-                  <div className={styles.footerLogo}>MSL CLEAN</div>
+                  <Logo />
                   <p className={styles.footerTagline}>Будьте в курсе новостей</p>
                   <div className={styles.newsletterForm}>
                     <input type="email" placeholder="Email" className={styles.newsletterInput} />
