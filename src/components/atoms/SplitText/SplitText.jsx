@@ -53,9 +53,8 @@ export default function SplitText({
         {words.map((word, i) => (
           <span key={i} className={styles.wordWrapper}>
             <motion.span className={styles.word} variants={wordVariants}>
-              {word}
+              {word}{i < words.length - 1 ? '\u00A0' : ''}
             </motion.span>
-            {i < words.length - 1 && ' '}
           </span>
         ))}
       </motion.span>
